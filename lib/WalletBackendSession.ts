@@ -17,8 +17,8 @@ export class WalletBackendSession {
     return new Address()
   }
 
-  public initiatePayment(address: string, amount: number): any {
-    return "initiatePayment called"
+  public initiatePayment(address: string, amount: number): TransactionProposal {
+    return new TransactionProposal()
   }
 
   public sendSignedTransaction(proposal: TransactionProposal): BroadcastResult {
