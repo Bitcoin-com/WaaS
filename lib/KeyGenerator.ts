@@ -1,39 +1,17 @@
-import { BITBOX } from "bitbox-sdk"
-import * as bcl from "bitcoincashjs-lib"
-import { resturl } from "./Wallet"
-
-const bitbox = new BITBOX()
+import { HdPrivateKey } from "./HdPrivateKey"
+import { resturl, walleturl } from "./Wallet"
 
 export class KeyGenerator {
   public restURL: string
+  public walletURL: string
   public mnemonic: string = ""
-  constructor(restURL: string = resturl) {
+  constructor(restURL: string = resturl, walletURL: string = walleturl) {
     this.restURL = restURL
+    this.walletURL = walletURL
   }
 
-  public generate(): bcl.HDNode {
-    // 128 bit engish mnemoonic
-    let mnemonic: string = bitbox.Mnemonic.generate()
-    this.mnemonic = mnemonic
-
-    // root seed buffer
-    let rootSeed: Buffer = bitbox.Mnemonic.toSeed(mnemonic)
-
-    // master HDNode
-    let masterHDNode: bcl.HDNode = bitbox.HDNode.fromSeed(rootSeed, "mainnet")
-
-    // HDNode of BIP44 account
-    let account: bcl.HDNode = bitbox.HDNode.derivePath(
-      masterHDNode,
-      "m/44'/145'/0'"
-    )
-
-    // derive the first external change address HDNode
-    let change: bcl.HDNode = bitbox.HDNode.derivePath(account, "0/0")
-    return change
-  }
-
-  public getSeedString(): string {
-    return this.mnemonic
+  public generate(): HdPrivateKey {
+    const hdPrivateKey: HdPrivateKey = new HdPrivateKey()
+    return hdPrivateKey
   }
 }

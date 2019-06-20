@@ -7,6 +7,6 @@ export class Address {
   }
 
   public toCashAddr(): string {
-    return "foobar"
+    return "bitcoincash:qrd9khmeg4nqag3h5gzu8vjt537pm7le85lcauzezc"
   }
 }
