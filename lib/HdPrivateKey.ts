@@ -1,8 +1,9 @@
-import { BITBOX, HDNode } from "bitbox-sdk"
+import { HDNode, Mnemonic } from "bitbox-sdk"
 import * as bcl from "bitcoincashjs-lib"
 import { TransactionProposal } from "./TransactionProposal"
 
-const bitbox = new BITBOX()
+const mnemonic: Mnemonic = new Mnemonic()
+const hDNode: HDNode = new HDNode()
 
 export class HdPrivateKey extends HDNode {
   public hdNode: HDNode
@@ -10,23 +11,20 @@ export class HdPrivateKey extends HDNode {
   constructor() {
     super()
     // 128 bit engish mnemoonic
-    let mnemonic: string = bitbox.Mnemonic.generate()
-    this.mnemonic = mnemonic
+    let m: string = mnemonic.generate()
+    this.mnemonic = m
 
     // root seed buffer
-    let rootSeed: Buffer = bitbox.Mnemonic.toSeed(mnemonic)
+    let rootSeed: Buffer = mnemonic.toSeed(m)
 
     // master HDNode
-    let masterHDNode = bitbox.HDNode.fromSeed(rootSeed, "mainnet")
+    let masterHDNode: bcl.HDNode = hDNode.fromSeed(rootSeed, "mainnet")
 
     // HDNode of BIP44 account
-    let account: bcl.HDNode = bitbox.HDNode.derivePath(
-      masterHDNode,
-      "m/44'/145'/0'"
-    )
+    let account: bcl.HDNode = hDNode.derivePath(masterHDNode, "m/44'/145'/0'")
 
     // derive the first external change address HDNode
-    let change: bcl.HDNode = bitbox.HDNode.derivePath(account, "0/0")
+    let change: bcl.HDNode = hDNode.derivePath(account, "0/0")
     this.hdNode = change
   }
 
@@ -39,6 +37,6 @@ export class HdPrivateKey extends HDNode {
   }
 
   public toXPub(): string {
-    return bitbox.HDNode.toXPub(this.hdNode)
+    return hDNode.toXPub(this.hdNode)
   }
 }
