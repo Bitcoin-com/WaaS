@@ -1,17 +1,17 @@
-import * as bcl from "bitcoincashjs-lib"
 import { Address } from "./Address"
 import { BroadcastResult } from "./BroadcastResult"
+import { HdPrivateKey } from "./HdPrivateKey"
 import { KeyGenerator } from "./KeyGenerator"
 import { TransactionProposal } from "./TransactionProposal"
 import { WalletBackendSession } from "./WalletBackendSession"
 
-const kg: KeyGenerator = new KeyGenerator()
-const myPriv: bcl.HDNode = kg.generate()
-console.log(`Your seed is ${kg.getSeedString()}`)
+const keyGenerator: KeyGenerator = new KeyGenerator()
+const myPriv: HdPrivateKey = keyGenerator.generate()
+console.log(`Your seed is ${myPriv.getSeedString()}`)
 
 const session: WalletBackendSession = new WalletBackendSession()
 
-session.registerPubkey(myPriv.toXPub(myPriv))
+session.registerPubkey(myPriv.toXPub())
 
 const receiveAddress: Address = session.getNewAddress()
 

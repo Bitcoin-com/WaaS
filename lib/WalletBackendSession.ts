@@ -1,4 +1,6 @@
 import { Address } from "./Address"
+import { BroadcastResult } from "./BroadcastResult"
+import { TransactionProposal } from "./TransactionProposal"
 import { resturl } from "./Wallet"
 
 export class WalletBackendSession {
@@ -19,8 +21,8 @@ export class WalletBackendSession {
     return "initiatePayment called"
   }
 
-  public sendSignedTransaction(proposal: any): any {
-    return "sendSignedTransaction called"
+  public sendSignedTransaction(proposal: TransactionProposal): BroadcastResult {
+    return new BroadcastResult()
   }
 
   public getBalace(): number {

@@ -11,6 +11,6 @@ export class BroadcastResult {
   }
 
   public getTxId(): string {
-    return "txid"
+    return "1d4fa813781534566f0c750a564326ac59fcee6595a3119370c372b06fbe8a93"
   }
 }
