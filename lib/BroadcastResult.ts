@@ -6,7 +6,11 @@ export class BroadcastResult {
     this.restURL = restURL
   }
 
-  public generate() {
-    return "foobar"
+  public isSuccessful(): boolean {
+    return true
+  }
+
+  public getTxId(): string {
+    return "txid"
   }
 }
